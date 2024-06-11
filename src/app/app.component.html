@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 m-4">
+      <div class="card">
+        <div class="card-body">
+          <form #signUp="ngForm" (ngSubmit)="onSignUp(signUp)">
+            <div class="form-group" ngModelGroup="usernameEmailGroup">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" #username="ngModel" required ngModel pattern="[a-zA-z]+" minlength="7" id="username" name="username" class="form-control">
+                <span class="text-danger" *ngIf="username.touched && username.hasError('required')">
+                  Username is a mandotory field
+                </span>
+                <ng-container *ngIf="username.dirty">
+                  <span class="text-danger" *ngIf="username.hasError('pattern')">
+                    Username can only contain alphabates.
+                  </span>
+                  <span class="text-danger" *ngIf="username.hasError('minlength')">
+                    Username length shoulb be atleast {{username?.errors?.['minlength'].requiredLength}}, current length is {{username?.errors?.['minlength'].actualLength}}.
+                  </span>
+                </ng-container>
+              </div>
+  
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" #email="ngModel" required ngModel pattern="[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+" id="email" name="email" class="form-control">
+                <span class="text-danger" *ngIf="email.touched && email.hasError('required')">
+                  Email is a mandotory field
+                </span>
+                <span class="text-danger" *ngIf="email.dirty && email.hasError('pattern')">
+                  Email is invalid
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact">Contact</label>
+              <input type="text" pattern="[0-9]{10}" #contact="ngModel" required minlength="10" maxlength="10" class="form-control" ngModel id="contact" name="contact">
+              <span class="text-danger" *ngIf="contact.touched && contact.hasError('required')">
+                Contact is a mandatory field
+              </span>
+              <span class="text-danger" *ngIf="contact.dirty && contact.hasError('pattern')">
+                Please enter valid contact number
+              </span>
+              <span class="text-danger" *ngIf="contact.dirty && contact.hasError('minlength')">
+                Contact number should be of 10 digit
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="secretQuestion">Secret Question</label>
+              <select class="form-control" #secretQuestion="ngModel" required ngModel id="secretQuestion" name="secretQuestion">
+                <option value="Favorite Book">Favorite Book</option>
+                <option value="Favorite Film">Favorite Film</option>
+              </select>
+              <span class="text-danger" *ngIf="secretQuestion.touched && secretQuestion.hasError('required')">
+                secretQuestion is a mandotory field, please choose the secretQuestion.
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="secretAnswer">Secret Answer</label>
+              <input type="text" #secretAnswer="ngModel" required ngModel id="secretAnswer" name="secretAnswer" class="form-control">
+              <span class="text-danger" *ngIf="secretAnswer.touched && secretAnswer.hasError('required')">
+                secretAnswer is a mandotory field
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="isAvailable">isAvailable: <input type="checkbox" ngModel #isAvailable="ngModel" id="isAvailable" name="isAvailable"></label>
+            </div>
+
+            <div class="form-group" *ngFor="let mode of contcatArr">
+              <label for="mode.moc">
+                <input type="radio" name="modeOfContact" ngModel [id]="mode.moc" [value]="mode.moc">
+                {{mode.moc}}
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary btn-sm btn-block" [disabled]="signUp.invalid">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
